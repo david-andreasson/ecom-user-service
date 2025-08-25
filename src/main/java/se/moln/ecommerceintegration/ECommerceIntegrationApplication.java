@@ -8,6 +8,7 @@ public class ECommerceIntegrationApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ECommerceIntegrationApplication.class, args);
+        System.out.println("hello");
     }
 
 }
