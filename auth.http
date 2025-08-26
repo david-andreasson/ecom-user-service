@@ -1,9 +1,9 @@
 ### register – skapa användare
-POST http://localhost:8080/auth/register
+POST https://moln.ittt.se/auth/register
 Content-Type: application/json
 
 {
-  "email": "test@ing.se",
+  "email": "test2@ing.se",
   "password": "stringst",
   "firstName": "string",
   "lastName": "string"
@@ -12,14 +12,14 @@ Content-Type: application/json
 
 
 ### Login – hämta JWT
-POST http://localhost:8080/auth/login
+POST https://moln.ittt.se/auth/login
 Content-Type: application/json
 
 {
-  "email": "test@ing.se",
+  "email": "test2@ing.se",
   "password": "stringst"
 }
 
 ### Anropa skyddad endpoint /me
-GET http://localhost:8080/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGluZy5zZSIsImlzcyI6InVzZXItc2VydmljZSIsImlhdCI6MTc1NjE5ODY3OSwiZXhwIjoxNzU2MjAwNDc5LCJ1aWQiOiJjYWQyNjc3MC01ZTE5LTQ1MGQtODM0OS0zZGQwODVkNDBkNmIiLCJyb2xlIjoiVVNFUiJ9.M9yni4a5r0_EMg_9jvdzkxK0Nrtbb6NFXTssu7cDdiM
+GET https://moln.ittt.se//me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MkBpbmcuc2UiLCJpc3MiOiJ1c2VyLXNlcnZpY2UiLCJpYXQiOjE3NTYyMDUxNzksImV4cCI6MTc1NjIwNjk3OSwidWlkIjoiNTY1ZWU3OGYtNWEzYy00OTllLWJkOTUtNDBjYzAxNWIwODg1Iiwicm9sZSI6IlVTRVIifQ.91harcnQ3znL5rhrfrrjPkz4MPS4Qx-KvFnAi_dIXwk
