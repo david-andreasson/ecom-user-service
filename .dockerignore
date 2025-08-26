@@ -1,0 +1,22 @@
+# Byggartefakter
+target
+build
+out
+
+# VCS & IDE
+.git
+.gitignore
+.idea
+.vscode
+*.iml
+.DS_Store
+
+# Lokala datafiler (H2, logs, osv)
+data
+*.mv.db
+*.trace.db
+*.log
+
+# Maven/Gradle cache
+.mvn/wrapper/maven-wrapper.jar
+.gradle
