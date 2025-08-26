@@ -1,0 +1,25 @@
+### register – skapa användare
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@ing.se",
+  "password": "stringst",
+  "firstName": "string",
+  "lastName": "string"
+}
+
+
+
+### Login – hämta JWT
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@ing.se",
+  "password": "stringst"
+}
+
+### Anropa skyddad endpoint /me
+GET http://localhost:8080/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGluZy5zZSIsImlzcyI6InVzZXItc2VydmljZSIsImlhdCI6MTc1NjE5ODY3OSwiZXhwIjoxNzU2MjAwNDc5LCJ1aWQiOiJjYWQyNjc3MC01ZTE5LTQ1MGQtODM0OS0zZGQwODVkNDBkNmIiLCJyb2xlIjoiVVNFUiJ9.M9yni4a5r0_EMg_9jvdzkxK0Nrtbb6NFXTssu7cDdiM

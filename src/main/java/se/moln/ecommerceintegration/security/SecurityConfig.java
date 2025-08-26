@@ -38,8 +38,10 @@ public class SecurityConfig {
                                 "/login",
                                 "/h2-console/**"
                         ).permitAll()
+                        .requestMatchers("/me").authenticated()
                         .anyRequest().authenticated()
                 )
+                .anonymous(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
