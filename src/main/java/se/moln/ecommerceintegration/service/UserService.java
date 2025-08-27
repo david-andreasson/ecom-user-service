@@ -22,4 +22,19 @@ public class UserService {
         String hash = passwordEncoder.encode(rawPassword);
         return users.save(User.newUser(email, hash, firstName, lastName));
     }
+
+    @Transactional
+    public User updateSettings(String email,String firstName, String lastName) {
+        User user = users.findByEmail(email)
+                .orElseThrow(() -> new IllegalStateException("User not found: " + email));
+
+        if (firstName != null){
+            user.setFirstName(firstName);
+        }
+        if (lastName != null){
+            user.setLastName(lastName);
+        }
+        return users.save(user);
+
+    }
 }

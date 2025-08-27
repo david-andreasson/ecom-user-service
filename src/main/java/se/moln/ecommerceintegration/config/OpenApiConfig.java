@@ -16,18 +16,19 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI userServiceOpenAPI() {
         return new OpenAPI()
+                .servers(List.of(new Server().url("https://moln.ittt.se")))
                 .info(new Info()
-                    .title("User Service API")
-                    .version("v1")
-                    .description("Auth & User endpoints"))
+                        .title("User Service API")
+                        .version("v1")
+                        .description("Auth & User endpoints"))
                 .addSecurityItem(new SecurityRequirement()
                         .addList("bearerAuth")
                         .addList("apiKeyAuth"))
                 .components(new Components()
-                .addSecuritySchemes("bearerAuth",
-                        new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer")
-                                .bearerFormat("JWT")));
+                        .addSecuritySchemes("bearerAuth",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
     }
 }
