@@ -1,13 +1,25 @@
 package se.moln.ecommerceintegration.model;
 import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.util.UUID;
 import java.time.Instant;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "activity_logs", indexes = {
-        @Index(name = "ix_activity_logs_user_ts", columnList = "userEmail,createdAt DESC")
-})
+@Table(
+        name = "activity_logs",
+        indexes = {
+                @Index(name = "ix_activity_logs_user_ts", columnList = "user_email, created_at")
+        }
+)
 public class ActivityLog {
+
     @Id
     @Column(nullable = false, updatable = false)
     private UUID id;
@@ -15,7 +27,7 @@ public class ActivityLog {
     @Column(nullable = false, length = 32)
     private String action;
 
-    @Column(length = 255)
+    @Column(name = "user_email", length = 255)
     private String userEmail;
 
     @Column(length = 10)
@@ -25,29 +37,38 @@ public class ActivityLog {
     private String path;
 
     private int status;
-    @Column(length = 64)  private String ip;
-    @Column(length = 256) private String userAgent;
 
+    @Column(length = 64)
+    private String ip;
+
+    @Column(name = "user_agent", length = 256)
+    private String userAgent;
+
+    @Column(name = "duration_ms")
     private long durationMs;
-    @Column(nullable = false) private Instant createdAt;
 
-    @PrePersist void onCreate() {
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @PrePersist
+    void onCreate() {
         if (id == null) id = UUID.randomUUID();
-        if (createdAt == null) createdAt = Instant.now();
     }
 
-    // getters/setters
-    public static ActivityLog of(String action, String userEmail, String method, String path, int status, String ip, String userAgent, long durationMs) {
-        ActivityLog activityLog = new ActivityLog();
-        activityLog.action = action;
-        activityLog.userEmail = userEmail;
-        activityLog.method = method;
-        activityLog.path = path;
-        activityLog.status = status;
-        activityLog.ip = ip;
-        activityLog.userAgent = userAgent;
-        activityLog.durationMs = durationMs;
-        return activityLog;
-
+    public static ActivityLog of(
+            String action, String userEmail, String method, String path,
+            int status, String ip, String userAgent, long durationMs
+    ) {
+        return ActivityLog.builder()
+                .action(action)
+                .userEmail(userEmail)
+                .method(method)
+                .path(path)
+                .status(status)
+                .ip(ip)
+                .userAgent(userAgent)
+                .durationMs(durationMs)
+                .build();
     }
 }
