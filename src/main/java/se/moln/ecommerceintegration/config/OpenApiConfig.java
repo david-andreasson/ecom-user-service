@@ -16,7 +16,6 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI userServiceOpenAPI() {
         return new OpenAPI()
-                .servers(List.of(new Server().url("https://moln.ittt.se")))
                 .info(new Info()
                         .title("User Service API")
                         .version("v1")
