@@ -7,6 +7,8 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static se.moln.ecommerceintegration.model.Role.USER;
+import static se.moln.ecommerceintegration.model.Role.ADMIN;
 
 class UserTest {
 
@@ -21,7 +23,7 @@ class UserTest {
         assertThat(u.getLastName()).isEqualTo("Andreasson");
 
         // defaults from entity
-        assertThat(u.getRole()).isEqualTo("USER");      // default role
+        assertThat(u.getRole()).isEqualTo(USER);      // default role
         assertThat(u.getIsActive()).isTrue();           // default active
         assertThat(u.getCreatedAt()).isNull();          // not set until @PrePersist
         assertThat(u.getUpdatedAt()).isNull();          // not set until @PrePersist
@@ -76,14 +78,14 @@ class UserTest {
         u.setPasswordHash("NEW_HASH");
         u.setFirstName("NewF");
         u.setLastName("NewL");
-        u.setRole(u.getRole());
+        u.setRole(ADMIN);
         u.setIsActive(false);
 
         assertThat(u.getEmail()).isEqualTo("new@e.com");
         assertThat(u.getPasswordHash()).isEqualTo("NEW_HASH");
         assertThat(u.getFirstName()).isEqualTo("NewF");
         assertThat(u.getLastName()).isEqualTo("NewL");
-        assertThat(u.getRole()).isEqualTo("ADMIN");
+        assertThat(u.getRole()).isEqualTo(ADMIN);
         assertThat(u.getIsActive()).isFalse();
     }
 

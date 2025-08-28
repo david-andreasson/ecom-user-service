@@ -62,7 +62,7 @@ public class UserSettingsController {
         User u = userService.updateSettings(email, first, last);
         return new UserProfileResponse(
                 u.getId(), u.getEmail(), u.getFirstName(), u.getLastName(),
-                u.getRole(), Boolean.TRUE.equals(u.getIsActive())
+                u.getRole().name(), Boolean.TRUE.equals(u.getIsActive())
         );
     }
 }
