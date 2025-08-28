@@ -49,7 +49,7 @@ class AuthControllerTest {
         RegisterRequest req = new RegisterRequest("user@example.com", "Password123!", "David", "Andreasson");
         User saved = User.newUser(req.email(), "{bcrypt}", req.firstName(), req.lastName());
         when(userService.register(req.email(), req.password(), req.firstName(), req.lastName())).thenReturn(saved);
-        when(jwtService.createAccessToken(saved.getId(), saved.getEmail(), saved.getRole())).thenReturn("token-123");
+        when(jwtService.createAccessToken(saved.getId(), saved.getEmail(), saved.getRole().name())).thenReturn("token-123");
 
         mvc.perform(post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -94,8 +94,7 @@ class AuthControllerTest {
         User user = User.newUser(email, hash, "David", "Andreasson");
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
-        when(jwtService.createAccessToken(user.getId(), user.getEmail(), user.getRole())).thenReturn("token-xyz");
-
+        when(jwtService.createAccessToken(user.getId(), user.getEmail(), user.getRole().name())).thenReturn("token-xyz");
         LoginRequest req = new LoginRequest(email, rawPassword);
 
         mvc.perform(post("/auth/login")
