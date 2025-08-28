@@ -23,6 +23,7 @@
         <jjwt.version>0.11.5</jjwt.version>
         <springdoc.version>2.8.9</springdoc.version>
         <jacoco.version>0.8.12</jacoco.version>
+        <sonar.organization>moln-integration</sonar.organization>
     </properties>
 
     <dependencies>

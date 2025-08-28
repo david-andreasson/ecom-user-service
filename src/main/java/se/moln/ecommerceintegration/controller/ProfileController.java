@@ -27,7 +27,7 @@ public class ProfileController {
                 u.getEmail(),
                 u.getFirstName(),
                 u.getLastName(),
-                u.getRole(),
+                u.getRole().name(),
                 Boolean.TRUE.equals(u.getIsActive())
         );
     }
