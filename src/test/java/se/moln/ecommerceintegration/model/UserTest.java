@@ -76,7 +76,7 @@ class UserTest {
         u.setPasswordHash("NEW_HASH");
         u.setFirstName("NewF");
         u.setLastName("NewL");
-        u.setRole("ADMIN");
+        u.setRole(u.getRole());
         u.setIsActive(false);
 
         assertThat(u.getEmail()).isEqualTo("new@e.com");

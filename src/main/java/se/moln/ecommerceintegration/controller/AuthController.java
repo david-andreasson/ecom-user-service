@@ -49,7 +49,7 @@ public class AuthController {
             @Valid @org.springframework.web.bind.annotation.RequestBody RegisterRequest req
     ) {
         User user = userService.register(req.email(), req.password(), req.firstName(), req.lastName());
-        return new AuthResponse(jwt.createAccessToken(user.getId(), user.getEmail(), user.getRole()));
+        return new AuthResponse(jwt.createAccessToken(user.getId(), user.getEmail(), user.getRole().name()));
     }
 
     @PostMapping("/login")
@@ -73,6 +73,6 @@ public class AuthController {
         User user = users.findByEmail(req.email()).orElseThrow(() -> new IllegalStateException("Invalid credentials"));
         var enc = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
         if (!enc.matches(req.password(), user.getPasswordHash())) throw new IllegalStateException("Invalid credentials");
-        return new AuthResponse(jwt.createAccessToken(user.getId(), user.getEmail(), user.getRole()));
+        return new AuthResponse(jwt.createAccessToken(user.getId(), user.getEmail(), user.getRole().name()));
     }
 }
