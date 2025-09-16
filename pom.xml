@@ -129,10 +129,11 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <!-- Standard är att generera alla; här begränsar vi till HTML + XML -->
+                            <!-- Standard är att generera alla; här begränsar vi till HTML + XML + CSV -->
                             <formats>
                                 <format>HTML</format>
                                 <format>XML</format>
+                                <format>CSV</format>
                             </formats>
                         </configuration>
                     </execution>
