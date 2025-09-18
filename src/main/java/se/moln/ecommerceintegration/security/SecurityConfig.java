@@ -25,9 +25,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtService jwt) throws Exception {
         return http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**")
+                        .disable()
+                )
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin()) // Tillåt H2 Console iframes
+                )
                 .authorizeHttpRequests(auth -> auth
                         //släpp in Swagger & API-docs utan auth
                         .requestMatchers(
@@ -39,7 +46,9 @@ public class SecurityConfig {
                                 "/error",
                                 "/register",
                                 "/login",
-                                "/h2-console/**"
+                                "/auth/**",
+                                "/h2-console/**",
+                                "/**"
                         ).permitAll()
                         .requestMatchers("/me").authenticated()
                         .requestMatchers("/users/**").hasRole("ADMIN")
