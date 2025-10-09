@@ -1,17 +1,14 @@
 package se.moln.ecommerceintegration.config;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+// NOTE: CORS is centrally configured in SecurityConfig.corsConfigurationSource().
+// Leaving this class without @Configuration to avoid duplicate/competing CORS setups.
 public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Allow all endpoints
-                .allowedOrigins("http://localhost:3000", "https://productservice.drillbi.se/", "https://userservice.drillbi.se", "https://kebabrolle.drillbi.se/", "https://orderservice.drillbi.se/")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*");
+        // Intentionally no-op: handled by SecurityConfig
     }
 }

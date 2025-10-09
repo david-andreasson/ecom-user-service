@@ -38,4 +38,25 @@ public class JwtService {
     public Jws<Claims> parse(String token) {
         return Jwts.parserBuilder().setSigningKey(key).requireIssuer(issuer).build().parseClaimsJws(token);
     }
+
+    /**
+     * Validate token signature, issuer and expiration.
+     */
+    public boolean isTokenValid(String token) {
+        try {
+            if (token == null || token.isBlank()) return false;
+            Jws<Claims> jws = parse(token);
+            Date exp = jws.getBody().getExpiration();
+            return exp != null && exp.after(new Date());
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Extracts the email stored in the JWT subject ("sub").
+     */
+    public String extractEmail(String token) {
+        return parse(token).getBody().getSubject();
+    }
 }

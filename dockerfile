@@ -1,8 +1,14 @@
 # Steg 1: Bygg applikationen med Maven och Corretto 21
 FROM maven:3.9.6-amazoncorretto-21 AS builder
 WORKDIR /app
-COPY . .
-RUN mvn clean package -Dmaven.test.skip=true
+
+# Kopiera endast pom först för att cacha dependencies
+COPY pom.xml .
+RUN --mount=type=cache,target=/root/.m2 mvn -q -B -DskipTests dependency:go-offline
+
+# Kopiera resten och bygg
+COPY src ./src
+RUN --mount=type=cache,target=/root/.m2 mvn -q -B -Dmaven.test.skip=true clean package
 
 # Steg 2: Kör applikationen med Amazon Corretto 21
 FROM amazoncorretto:21
