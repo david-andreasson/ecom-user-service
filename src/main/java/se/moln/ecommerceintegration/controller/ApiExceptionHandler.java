@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
@@ -19,6 +20,23 @@ public class ApiExceptionHandler {
         log.warn("Bad request at {}: {}", req.getRequestURI(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", "bad_request", "message", ex.getMessage()));
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Map<String, Object>> handleStatus(ResponseStatusException ex, HttpServletRequest req) {
+        log.warn("Handled status exception at {}: {}", req.getRequestURI(), ex.getReason());
+        String errorCode = switch (ex.getStatusCode().value()) {
+            case 401 -> "unauthorized";
+            case 403 -> "forbidden";
+            case 404 -> "not_found";
+            default -> ex.getStatusCode().is4xxClientError() ? "client_error" : "error";
+        };
+        String message = ex.getReason() != null ? ex.getReason() : ex.getStatusCode().toString();
+        return ResponseEntity.status(ex.getStatusCode())
+                .body(Map.of(
+                        "error", errorCode,
+                        "message", message
+                ));
     }
 
     @ExceptionHandler(Exception.class)

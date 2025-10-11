@@ -4,11 +4,19 @@ WORKDIR /app
 
 # Kopiera endast pom först för att cacha dependencies
 COPY pom.xml .
-RUN --mount=type=cache,target=/root/.m2 mvn -q -B -DskipTests dependency:go-offline
+RUN --mount=type=cache,target=/root/.m2 mvn -q -B -DskipTests \
+    -Dmaven.wagon.http.retryHandler.count=5 \
+    -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 \
+    -Dmaven.wagon.http.pool=false \
+    dependency:go-offline
 
 # Kopiera resten och bygg
 COPY src ./src
-RUN --mount=type=cache,target=/root/.m2 mvn -q -B -Dmaven.test.skip=true clean package
+RUN --mount=type=cache,target=/root/.m2 mvn -q -B -Dmaven.test.skip=true \
+    -Dmaven.wagon.http.retryHandler.count=5 \
+    -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 \
+    -Dmaven.wagon.http.pool=false \
+    clean package
 
 # Steg 2: Kör applikationen med Amazon Corretto 21
 FROM amazoncorretto:21

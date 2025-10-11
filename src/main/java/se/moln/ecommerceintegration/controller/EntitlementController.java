@@ -84,4 +84,16 @@ public class EntitlementController {
                                           @RequestBody Map<String, Object> body) {
         return mockPay(auth, body);
     }
+
+    // Grant entitlement after purchase (called by order-service)
+    @PostMapping("/api/users/me/entitlements/grant")
+    public ResponseEntity<?> grantEntitlement(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String auth,
+                                              @RequestBody Map<String, Object> body) {
+        var uid = currentUserIdFromAuth(auth);
+        if (uid == null) return ResponseEntity.status(401).body(Map.of("error", "unauthorized"));
+        String sku = (String) body.getOrDefault("sku", "");
+        int count = ((Number) body.getOrDefault("count", 1)).intValue();
+        entitlements.issue(uid, sku, count, null);
+        return ResponseEntity.ok(Map.of("status", "granted", "sku", sku, "count", count));
+    }
 }
