@@ -66,9 +66,9 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
         cfg.setAllowedOrigins(List.of(
-                "http://localhost:8080", // legacy frontend
-                "http://localhost:8085", // frontend_v2 (nginx)
-                "http://localhost:5173"  // vite dev server
+                "https://ecom.drillbi.se",
+                "http://localhost:8080" //frontend
+
         ));
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         cfg.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Origin", "Accept"));
