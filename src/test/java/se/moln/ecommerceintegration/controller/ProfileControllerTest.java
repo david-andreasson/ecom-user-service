@@ -10,22 +10,20 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 class ProfileControllerTest {
 
     @Test
     void me_returnsProfile_forUserDetailsPrincipal() {
-        UserRepository repo1 = Mockito.mock(UserRepository.class);
-        UserRepository repo2 = Mockito.mock(UserRepository.class);
-        ProfileController controller = new ProfileController(repo1, repo2);
+        UserRepository repo = Mockito.mock(UserRepository.class);
+        ProfileController controller = new ProfileController(repo);
 
         var ud = org.springframework.security.core.userdetails.User
                 .withUsername("user@example.com").password("x").roles("USER").build();
 
         User entity = User.newUser("user@example.com", "HASH", "Anna", "Andersson");
-        when(repo2.findByEmail("user@example.com")).thenReturn(Optional.of(entity));
+        when(repo.findByEmail("user@example.com")).thenReturn(Optional.of(entity));
 
         UserProfileResponse resp = controller.me(ud);
         assertThat(resp.email()).isEqualTo("user@example.com");
@@ -36,9 +34,8 @@ class ProfileControllerTest {
 
     @Test
     void me_unsupportedPrincipal_throws() {
-        UserRepository repo1 = Mockito.mock(UserRepository.class);
-        UserRepository repo2 = Mockito.mock(UserRepository.class);
-        ProfileController controller = new ProfileController(repo1, repo2);
+        UserRepository repo = Mockito.mock(UserRepository.class);
+        ProfileController controller = new ProfileController(repo);
 
         assertThrows(IllegalStateException.class, () -> controller.me(new Object()));
     }
