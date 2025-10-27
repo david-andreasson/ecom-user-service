@@ -1,17 +1,11 @@
 package se.moln.ecommerceintegration.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.User;
 import se.moln.ecommerceintegration.dto.UpdateSettingsRequest;
-import se.moln.ecommerceintegration.exception.GlobalExceptionHandler;
 import se.moln.ecommerceintegration.service.UserService;
-
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

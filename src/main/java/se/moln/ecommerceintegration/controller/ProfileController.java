@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.moln.ecommerceintegration.dto.UserProfileResponse;
 import se.moln.ecommerceintegration.model.User;
@@ -14,7 +13,6 @@ import se.moln.ecommerceintegration.repository.UserRepository;
 @RestController
 @RequiredArgsConstructor
 public class ProfileController {
-    private final UserRepository repo;
     private final UserRepository userRepository;
 
     @GetMapping("/me")
